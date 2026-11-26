@@ -1,0 +1,12 @@
+{
+  "name": "RDM AI Office - Agent Webhook",
+  "nodes": [
+    { "parameters": { "httpMethod": "POST", "path": "rdm-finance", "responseMode": "responseNode", "options": { "allowedOrigins": "*" } },
+      "name": "Webhook", "type": "n8n-nodes-base.webhook", "typeVersion": 2, "position": [0, 0] },
+    { "parameters": { "respondWith": "json",
+        "responseBody": "={{ { \"output\": \"[\" + $json.body.agent + \"] got: \" + $json.body.message, \"status\": \"idle\" } }}",
+        "options": { "responseHeaders": { "entries": [ { "name": "Access-Control-Allow-Origin", "value": "*" } ] } } },
+      "name": "Respond to Webhook", "type": "n8n-nodes-base.respondToWebhook", "typeVersion": 1.1, "position": [320, 0] }
+  ],
+  "connections": { "Webhook": { "main": [ [ { "node": "Respond to Webhook", "type": "main", "index": 0 } ] ] } }
+}
